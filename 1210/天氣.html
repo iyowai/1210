@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        $(documeant).ready(function() {
+            $.ajax({
+                url: "http://api.openweathermap.org/data/2.5/weather?q=Taipei&appid=a59524027cad32ffd190413ec0397166&units=metric&lang=zh_TW ",
+                dataType: "json",
+                success: function(e) {
+                    console.log(e.weather[0].description);
+                    var c = `
+                        <div>現在溫度:${e.main.temp}</div> 
+                         <div>最高溫:${e.main.temp_max}</div> 
+                        <div>最低溫:${e.main.temp_min}</div> 
+                    
+                        <div>${e.weather[0].description}</div> 
+                             `
+                    $(".container").append(c);
+                },
+                error: function() {
+                    console.log("error");
+                }
+            })
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="container"></div>
+
+</body>
+
+</html>

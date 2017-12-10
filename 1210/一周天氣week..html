@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "http://api.openweathermap.org/data/2.5/forecast/daily",
+                data:{
+                    q:"Taipei",
+                    cnt:7,
+                    appid:"b1ecbccd638b763d489602917ba47cc3",
+                    lang:"zh_TW",
+                    units:"metric"
+                },
+                dataType: "json",
+                success: function(e) {
+//                    console.log(e.list[0].temp.day);
+                    $(e.list).each(function(){
+//                        console.log(this.temp.day);
+//                        console.log(this.temp.max);
+//                        console.log(this.temp.min);
+                        var now = new Date(this.dt*1000);
+                        var Y = now.getFullYear();
+                        var M = now.getMonth()+1;
+                        var D = now.getDate();
+                        var d = now.getDay();
+                        if(d==0){
+                            d="日"
+                        }
+                        var h = now.getHours();
+                        var m = now.getMinutes();
+                        var s = now.getSeconds();
+                        console.log(`${Y}年${M}月${D}日星期${d}`);
+                        var c = `
+                            <div class="box">
+                            <div>目前溫度:${this.temp.day}</div>
+                            <div>${this.weather[0].description}</div>
+                            <div>${Y}年${M}月${D}日星期${d}</div>
+                            </div>
+                        `;
+                        $(".container").append(c);
+                        
+                    })
+                },
+                error: function() {
+                    console.log("error");
+                }
+            })
+        });
+
+    </script>
+
+
+</head>
+
+<body>
+    <div class="container"></div>
+
+</body>
+
+</html>
